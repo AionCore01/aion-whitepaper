@@ -13,26 +13,22 @@
   <link rel="icon" type="image/png" href="favicon.png">
 
   <style>
-/* 1. RESET Y TIPOGRAFÍA BASE */
-/* 🛠️ CORRECCIÓN CLAVE: Eliminado box-sizing del body. Es mejor aplicarlo globalmente o no aplicarlo aquí. */
-/* También eliminamos el scroll-behavior del body porque está en el script y puede causar conflicto. */
-/* 🛠️ Nuevo: Añadido box-sizing: border-box; de forma global para mejor manejo de layout. */
-
+/* 🛠️ CORRECCIÓN 1: Aplicación correcta del box-sizing global */
 *, *::before, *::after {
-    box-sizing: border-box; /* Aplica el box model estándar */
+    box-sizing: border-box; 
 }
 
+/* 1. RESET Y TIPOGRAFÍA BASE */
 body {
+    /* box-sizing: border-box; <-- ELIMINADO: ahora es global */
     margin: 0;
     padding: 0;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     line-height: 1.6;
     color: #1a1a1a;
-    
-    /* 🛠️ Nuevo: El fondo debe ir en el body o html para cubrir toda el área. */
-    /* Mantenemos el fondo aquí, pero le quitamos el min-height. */
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-    min-height: 100vh; /* Se mantiene para asegurar el fondo si el contenido es corto. */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    /* scroll-behavior: smooth; <-- ELIMINADO: lo gestiona el script */
 }
 
     .container {
@@ -123,8 +119,15 @@ body {
 
     /* 3. CONTENIDO Y TIPOGRAFÍA */
     .content {
-        padding: 60px 40px;
-    }
+    /* 🛠️ CORRECCIÓN 2: Implementación de CSS Grid de dos columnas */
+    display: grid;
+    /* Primera columna: TOC (250px) | Segunda columna: Contenido (el resto) */
+    grid-template-columns: 250px 1fr;
+    gap: 40px; /* Espacio entre las columnas */
+    
+    /* El padding del content se aplicará ahora en las columnas */
+    padding: 60px 40px; 
+}
 
     .section {
         margin-bottom: 50px;
@@ -256,16 +259,25 @@ body {
 
     /* 5. TOC STICKY Y ENLACES */
     .toc {
-        background: #f8f9fa;
-        border: 2px solid #dee2e6;
-        border-radius: 8px;
-        padding: 30px;
-        margin: 40px 0;
-        /* TOC Sticky */
-        position: sticky; 
-        top: 80px; /* 🛠️ CORRECCIÓN: Subimos el top para que tenga más margen superior al hacer scroll */
-        z-index: 10;
-    }
+    background: #f8f9fa;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    padding: 30px;
+    
+    /* 🛠️ AJUSTE: Eliminar margen vertical, el grid lo maneja */
+    margin-top: 0; 
+    margin-bottom: 0;
+    
+    /* TOC Sticky */
+    position: sticky; 
+    /* 🛠️ AJUSTE: top: 80px da más espacio y visibilidad al header */
+    top: 80px; 
+    z-index: 10;
+    
+    /* 🛠️ NUEVO: Restringir altura y permitir scroll dentro del TOC si es muy largo */
+    max-height: calc(100vh - 100px); 
+    overflow-y: auto; 
+}
 
     .toc-title {
         font-size: 1.5rem;
@@ -315,6 +327,13 @@ body {
         padding: 40px;
         margin-top: 60px;
     }
+
+/* NUEVO: Contenedor de las secciones para la columna derecha del Grid */
+.main-sections {
+    /* Necesitas forzar el contenido a ocupar su columna */
+    grid-column: 2;
+    /* La primera sección ya tiene un margin-top de 50px */
+}
     
     /* 6. RESPONSIVIDAD Y ADAPTABILIDAD */
     @media (max-width: 768px) {
@@ -460,6 +479,7 @@ body {
         </ul>
       </nav>
       
+      <div class="main-sections">
       <section id="abstract" class="section" aria-labelledby="abstract-title">
         <h2 class="section-title" id="abstract-title">Abstract</h2>
         <div class="highlight-box">
@@ -706,6 +726,7 @@ body {
         </div>
         <a href="#top" class="back-to-top">↑ Volver arriba</a>
       </section>
+      </div>
     </main>
     <footer class="footer">
       <p id="footer-text">© 2024 AION Research Initiative</p>
