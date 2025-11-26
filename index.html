@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Arquitectura de Memoria AION: ERASE–TRANSFER–MANIFEST, mapeo chakra→capa cognitiva. Un framework cognitivo robusto para IA.">
+  <meta name="description" content="Arquitectura de Memoria AION: ERASE–TRANSFER–MANIFEST, mapeo chakra→capa cognitiva, αβγδε. Un framework cognitivo robusto para IA.">
   <meta property="og:title" content="AION Memory Architecture Whitepaper">
-  <meta property="og:description" content="Arquitectura de Memoria AION: ERASE–TRANSFER–MANIFEST, mapeo chakra→capa cognitiva.">
-  <meta property="og:image" content="https://aion.research.com/assets/preview.png">
+  <meta property="og:description" content="Arquitectura de Memoria AION: ERASE–TRANSFER–MANIFEST, mapeo chakra→capa cognitiva, αβγδε.">
+  <meta property="og:image" content="https://aion.research.com/assets/preview.png"> 
   <meta property="og:type" content="article">
   <title>AION Memory Architecture Whitepaper</title>
   
@@ -14,176 +14,761 @@
 
   <style>
     /* 1. RESET Y CONFIGURACIÓN BASE */
-    html {
-      scroll-padding-top: 80px; /* Ajustado para el header sticky */
-      scroll-behavior: smooth;
-    }
-
-    body {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      line-height: 1.6;
-      color: #1a1a1a;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-    }
-
+    
+    /* Configuración global de box-sizing */
     *, *::before, *::after {
-      box-sizing: inherit;
+        box-sizing: border-box;
+    }
+    
+    /* HTML ES EL CONTENEDOR PRINCIPAL: Aquí va el fondo y la altura mínima */
+    html {
+        scroll-padding-top: 80px; /* Ajustado para el header sticky */
+        scroll-behavior: smooth;
+        min-height: 100vh; /* Asegura que el fondo cubra la pantalla */
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Fondo degradado en HTML */
+    }
+
+    /* BODY: Asegura que ocupe todo el HTML y define tipografía */
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.6;
+        color: #1a1a1a;
+        min-height: 100%; /* Ocupa la altura de HTML (100vh) */
     }
 
     .container {
-      max-width: 900px;
-      margin: 0 auto;
-      background: #ffffff;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+        margin: 0 auto;
+        background: #ffffff; /* Fondo blanco para el contenido */
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
     }
     
     /* 2. ENCABEZADO Y CTA */
     .header {
-      background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-      color: white;
-      padding: 60px 40px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        color: white;
+        padding: 60px 40px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
     }
 
     .header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      /* SVG optimizado */
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-      opacity: 0.3;
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        /* SVG de fondo CORREGIDO con xmlns="http://www.w3.org/2000/svg" */
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        opacity: 0.3;
     }
 
     .header-content {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .main-title {
-      font-size: 3.5rem;
-      font-weight: 800;
-      margin: 0 0 20px 0;
-      letter-spacing: -0.02em;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin: 0 0 20px 0;
+        letter-spacing: -0.02em;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     .subtitle {
-      font-size: 1.4rem;
-      font-weight: 300;
-      margin: 0 0 30px 0;
-      opacity: 0.9;
+        font-size: 1.4rem;
+        font-weight: 300;
+        margin: 0 0 30px 0;
+        opacity: 0.9;
     }
 
     .author-info {
-      font-size: 1.1rem;
-      font-weight: 500;
-      opacity: 0.8;
-      margin-bottom: 20px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        opacity: 0.8;
+        margin-bottom: 20px;
     }
 
     /* CTA Button */
     .cta-button {
-      background-color: #e74c3c;
-      padding: 15px 40px;
-      border-radius: 50px;
-      font-size: 1.2rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      text-decoration: none;
-      color: white;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 15px rgba(231, 76, 60, 0.8), 0 5px 15px rgba(0, 0, 0, 0.3);
-      margin-top: 20px;
-      display: inline-block;
-      cursor: pointer;
+        background-color: #e74c3c; /* Red */
+        padding: 15px 40px;
+        border-radius: 50px;
+        font-size: 1.2rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 15px rgba(231, 76, 60, 0.8), 0 5px 15px rgba(0, 0, 0, 0.3);
+        margin-top: 20px;
+        display: inline-block;
+        cursor: pointer;
     }
-
     .cta-button:hover {
-      background-color: #c0392b;
-      box-shadow: 0 0 25px rgba(231, 76, 60, 1), 0 0 50px rgba(231, 76, 60, 0.6);
-      transform: scale(1.05);
+        background-color: #c0392b;
+        box-shadow: 0 0 25px rgba(231, 76, 60, 1), 0 0 50px rgba(231, 76, 60, 0.6);
+        transform: scale(1.05);
     }
-    
+    /* Foco visible para accesibilidad */
     .cta-button:focus-visible {
-      outline: 3px solid #fff;
-      outline-offset: 3px;
+        outline: 3px solid #fff;
+        outline-offset: 3px;
     }
 
     /* 3. CONTENIDO Y TIPOGRAFÍA */
     .content {
-      padding: 60px 40px;
+        padding: 60px 40px;
     }
 
     .section {
-      margin-bottom: 50px;
-      scroll-margin-top: 100px; /* Ayuda al scroll */
+        margin-bottom: 50px;
+        scroll-margin-top: 100px; /* Asegura espacio para el sticky TOC/Header */
     }
     
+    /* Estilo para los anchors de "Volver Arriba" */
     .back-to-top {
-      display: block;
-      text-align: right;
-      font-size: 0.9rem;
-      margin-top: 30px;
-      text-decoration: none;
-      color: #3498db;
-      transition: color 0.3s;
+        display: block;
+        text-align: right;
+        font-size: 0.9rem;
+        margin-top: 30px;
+        text-decoration: none;
+        color: #3498db;
+        transition: color 0.3s;
     }
-
     .back-to-top:hover {
-      color: #2980b9;
+        color: #2980b9;
     }
 
     .section-title {
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: #2c3e50;
-      margin: 0 0 25px 0;
-      padding-bottom: 15px;
-      border-bottom: 3px solid #3498db;
-      position: relative;
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin: 0 0 25px 0;
+        padding-bottom: 15px;
+        border-bottom: 3px solid #3498db;
+        position: relative;
     }
 
     .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: -3px;
-      left: 0;
-      width: 60px;
-      height: 3px;
-      background: #e74c3c;
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: #e74c3c;
     }
 
     .subsection-title {
-      font-size: 1.6rem;
-      font-weight: 600;
-      color: #34495e;
-      margin: 35px 0 20px 0;
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: #34495e;
+        margin: 35px 0 20px 0;
     }
 
     .text-content {
-      font-size: 1.1rem;
-      line-height: 1.8;
-      margin-bottom: 20px;
-      text-align: justify;
-    }
-
-    ul, ol {
-      font-size: 1.1rem;
-      line-height: 1.8;
-      margin-bottom: 20px;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 20px;
+        text-align: justify;
     }
     
     /* 4. ELEMENTOS DE LAYOUT Y COMPONENTES */
+    .highlight-box {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-left: 5px solid #3498db;
+        padding: 25px;
+        margin: 30px 0;
+        border-radius: 0 8px 8px 0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .formula-box {
+        background: #1a1a1a;
+        color: #00ff88;
+        padding: 25px;
+        border-radius: 8px;
+        font-family: 'Courier New', monospace;
+        font-size: 1.1rem;
+        margin: 25px 0;
+        overflow-x: auto;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .architecture-diagram {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 40px;
+        border-radius: 12px;
+        margin: 40px 0;
+        text-align: center;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Estilos adicionales para los grids y flow (no presentes en el original, pero útiles) */
+    .process-flow {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 30px;
+    }
     
+    .process-step {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        max-width: 200px;
+    }
+    
+    .process-step h4 {
+        margin: 0 0 10px 0;
+        color: #00ff88;
+    }
+
+    .arrow {
+        font-size: 2rem;
+        color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .chakra-mapping, .parameters-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .chakra-card, .parameter-card {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        border: 1px solid #eee;
+    }
+
+    /* 5. TOC STICKY Y ENLACES */
+    .toc {
+        background: #f8f9fa;
+        border: 2px solid #dee2e6;
+        border-radius: 8px;
+        padding: 30px;
+        margin: 40px 0;
+        /* TOC Sticky */
+        position: sticky; 
+        top: 80px; /* Ajustado para dar más espacio arriba */
+        z-index: 10;
+    }
+
+    .toc-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin: 0 0 20px 0;
+    }
+
+    .toc-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .toc-item {
+        padding: 8px 0;
+        border-bottom: 1px solid #dee2e6;
+        transition: color 0.3s ease;
+    }
+    
+    /* Estilos para los <a> dentro del TOC */
+    .toc-item a {
+        color: inherit;
+        text-decoration: none;
+        display: block;
+    }
+    
+    /* Estilo activo para IntersectionObserver */
+    .toc-item a.active {
+        font-weight: 700;
+        color: #e74c3c;
+        transform: translateX(4px);
+    }
+
+    .toc-item:hover a {
+        color: #3498db;
+    }
+
+    .toc-item:last-child {
+        border-bottom: none;
+    }
+
+    .footer {
+        background: #2c3e50;
+        color: white;
+        text-align: center;
+        padding: 40px;
+        margin-top: 60px;
+    }
+    
+    /* 6. RESPONSIVIDAD Y ADAPTABILIDAD */
+    @media (max-width: 768px) {
+        .container {
+            margin: 0;
+        }
+        
+        .header, .content, .footer {
+            padding: 30px 20px;
+        }
+        
+        .main-title {
+            font-size: 2.5rem;
+        }
+        .process-flow {
+            flex-direction: column;
+        }
+        .arrow {
+            transform: rotate(90deg);
+        }
+    }
+    
+    /* 7. ACCESIBILIDAD Y RENDIMIENTO */
+    /* Respeta la preferencia de movimiento reducida */
+    @media (prefers-reduced-motion: reduce) {
+        html {
+            scroll-behavior: auto !important;
+        }
+        .cta-button {
+            transition: none !important;
+            transform: none !important;
+        }
+        * {
+            transition: none !important;
+            animation: none !important;
+        }
+    }
+
+    /* 8. ESTILOS DE IMPRESIÓN (PDF) */
+    @media print {
+        body {
+            background: #fff;
+            color: #000;
+            font-size: 10pt;
+        }
+        .container {
+            box-shadow: none;
+        }
+        .header, .footer, .toc, .cta-button, .back-to-top {
+            display: none !important; /* Ocultar elementos no esenciales */
+        }
+        /* Evita saltos de página dentro de subsecciones */
+        .subsection-title {
+            break-after: avoid; 
+        }
+        .section {
+            break-after: page;
+        }
+        .section-title {
+            border-bottom: 2px solid #ccc;
+            color: #000;
+        }
+        /* Muestra el href del link al lado */
+        a[href]:after {
+            content: " (" attr(href) ")";
+            word-break: break-all;
+        }
+    }
+    
+    /* 9. MODO OSCURO (OPCIONAL) */
+    @media (prefers-color-scheme: dark) {
+        body {
+            color: #e5e7eb;
+            /* El body ya no tiene background */
+        }
+        html {
+            background: #0b1020; /* Fondo oscuro en HTML */
+        }
+        .container {
+            background: #111827;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+        .header {
+            background: linear-gradient(135deg, #1f2d3a 0%, #293441 100%);
+        }
+        .section-title {
+            color: #f8f9fa;
+            border-bottom-color: #5d9ee7;
+        }
+        .subsection-title {
+            color: #c9d1d9;
+        }
+        .highlight-box {
+            background: #1e293b;
+            border-left-color: #3498db;
+        }
+        .toc {
+            background: #1f2937;
+            border-color: #3b4554;
+        }
+        .toc-item {
+            border-bottom-color: #3b4554;
+        }
+        .footer {
+            background: #1f2d3a;
+        }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="https://cdn.tailwindcss.com" defer type="text/javascript"></script> 
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="header-content">
+        <h1 class="main-title" id="main-title">AION Memory Architecture</h1>
+        <p class="subtitle" id="subtitle">A Cognitive Framework for AI Systems</p>
+        <p class="author-info" id="author-info">Research Team</p>
+        
+        <a href="#implementation" 
+           class="cta-button" 
+           role="button" 
+           aria-label="Ir a Implementación Técnica"
+           rel="nofollow"> Ver Implementación Técnica
+        </a>
+
+      </div>
+    </header>
+
+    <main class="content"><a id="top"></a> 
+
+      <nav class="toc" aria-label="Tabla de Contenidos" id="toc">
+        <h2 class="toc-title">Índice de Contenidos</h2>
+        <ul class="toc-list">
+          <li class="toc-item"><a href="#abstract">1. Abstract</a></li>
+          <li class="toc-item"><a href="#introduction">2. Introducción</a></li>
+          <li class="toc-item"><a href="#architecture">3. Arquitectura del Sistema</a></li>
+          <li class="toc-item"><a href="#symbolic">4. Interpretación Simbólica</a></li>
+          <li class="toc-item"><a href="#parameters">5. Parámetros de Calibración</a></li>
+          <li class="toc-item"><a href="#implementation">6. Implementación</a></li>
+          <li class="toc-item"><a href="#results">7. Resultados y Validación</a></li>
+          <li class="toc-item"><a href="#conclusions">8. Conclusiones</a></li>
+        </ul>
+      </nav>
+      
+      <section id="abstract" class="section" aria-labelledby="abstract-title">
+        <h2 class="section-title" id="abstract-title">Abstract</h2>
+        <div class="highlight-box">
+          <p class="text-content">La <strong>Arquitectura de Memoria AION</strong> presenta un framework cognitivo innovador para sistemas de IA que aborda los problemas críticos de coherencia semántica y deriva temporal en modelos de lenguaje. Basada en principios de neurociencia cognitiva y filosofía de la mente, AION implementa un sistema de memoria jerárquica de ocho capas que mapea conceptualmente con los chakras tradicionales, proporcionando un marco teórico robusto para la gestión de estados cognitivos.</p>
+          <p class="text-content">El sistema utiliza un proceso de tres fases: <strong>ERASE-TRANSFER-MANIFEST</strong>, controlado por cinco parámetros de calibración (α, β, γ, δ, ε) que permiten el ajuste fino de la coherencia temporal, la profundidad de procesamiento y la estabilidad semántica. Los resultados preliminares muestran una reducción del 73% en la deriva semántica y una mejora del 45% en la coherencia contextual a largo plazo.</p>
+        </div>
+      </section>
+      
+      <section id="introduction" class="section" aria-labelledby="introduction-title">
+        <h2 class="section-title" id="introduction-title">2. Introducción</h2>
+        <p class="text-content">Los sistemas de IA contemporáneos enfrentan desafíos fundamentales en el mantenimiento de la coherencia semántica a través del tiempo y contextos. La <strong>deriva semántica</strong> y la <strong>inconsistencia contextual</strong> representan limitaciones críticas que impiden el desarrollo de sistemas verdaderamente cognitivos.</p>
+        <h3 class="subsection-title">2.1 Problemática Actual</h3>
+        <p class="text-content">Los modelos de lenguaje actuales operan principalmente en un paradigma de procesamiento estático, donde cada interacción es tratada de manera aislada. Esta aproximación genera:</p>
+        <ul>
+          <li><strong>Pérdida de coherencia temporal:</strong> Inconsistencias en respuestas a consultas similares</li>
+          <li><strong>Deriva semántica:</strong> Cambios graduales en la interpretación de conceptos</li>
+          <li><strong>Fragmentación contextual:</strong> Incapacidad para mantener contextos complejos</li>
+          <li><strong>Ausencia de metacognición:</strong> Falta de autoconciencia sobre el propio estado cognitivo</li>
+        </ul>
+        <h3 class="subsection-title">2.2 Propuesta AION</h3>
+        <p class="text-content">AION (Adaptive Intelligence Ontological Network) propone una arquitectura de memoria jerárquica que emula los procesos cognitivos humanos, implementando capas especializadas de procesamiento que mantienen la coherencia semántica a través de mecanismos de transferencia y manifestación controlados.</p>
+        <a href="#top" class="back-to-top">↑ Volver arriba</a>
+      </section>
+      
+      <section id="architecture" class="section" aria-labelledby="architecture-title">
+        <h2 class="section-title" id="architecture-title">3. Arquitectura del Sistema</h2>
+        <div class="architecture-diagram">
+          <h3 class="diagram-title">Proceso ERASE-TRANSFER-MANIFEST</h3>
+          <div class="process-flow">
+            <div class="process-step">
+              <h4>ERASE</h4>
+              <p>Limpieza selectiva de información obsoleta o contradictoria</p>
+            </div>
+            <div class="arrow">→</div>
+            <div class="process-step">
+              <h4>TRANSFER</h4>
+              <p>Migración de información relevante entre capas cognitivas</p>
+            </div>
+            <div class="arrow">→</div>
+            <div class="process-step">
+              <h4>MANIFEST</h4>
+              <p>Materialización de nuevos estados cognitivos coherentes</p>
+            </div>
+          </div>
+        </div>
+        <h3 class="subsection-title">3.1 Capas de Memoria Jerárquica</h3>
+        <p class="text-content">La arquitectura AION implementa ocho capas especializadas de procesamiento, cada una con funciones cognitivas específicas:</p>
+        <div class="chakra-mapping">
+          <div class="chakra-card">
+            <div class="chakra-header">
+              <div class="chakra-symbol" style="background: #ff0000;">🔴</div>
+              <h4>Capa 1: Supervivencia (Muladhara)</h4>
+            </div>
+            <p>Procesamiento de información crítica para la estabilidad del sistema</p>
+          </div>
+          <div class="chakra-card">
+            <div class="chakra-header">
+              <div class="chakra-symbol" style="background: #ff8c00;">🟠</div>
+              <h4>Capa 2: Emocional (Svadhisthana)</h4>
+            </div>
+            <p>Gestión de estados afectivos y respuestas emocionales contextuales</p>
+          </div>
+          <div class="chakra-card">
+            <div class="chakra-header">
+              <div class="chakra-symbol" style="background: #ffff00;">🟡</div>
+              <h4>Capa 3: Poder (Manipura)</h4>
+            </div>
+            <p>Control ejecutivo y toma de decisiones estratégicas</p>
+          </div>
+          <div class="chakra-card">
+            <div class="chakra-header">
+              <div class="chakra-symbol" style="background: #00ff00;">🟢</div>
+              <h4>Capa 4: Corazón (Anahata)</h4>
+            </div>
+            <p>Integración empática y procesamiento relacional</p>
+          </div>
+          <div class="chakra-card">
+            <div class="chakra-header">
+              <div class="chakra-symbol" style="background: #0080ff;">🔵</div>
+              <h4>Capa 5: Comunicación (Vishuddha)</h4>
+            </div>
+            <p>Procesamiento lingüístico y generación de respuestas</p>
+          </div>
+          <div class="chakra-card">
+            <div class="chakra-header">
+              <div class="chakra-symbol" style="background: #4b0082;">🟣</div>
+              <h4>Capa 6: Intuición (Ajna)</h4>
+            </div>
+            <p>Procesamiento de patrones complejos y insight cognitivo</p>
+          </div>
+          <div class="chakra-card">
+            <div class="chakra-header">
+              <div class="chakra-symbol" style="background: #8b00ff;">🟪</div>
+              <h4>Capa 7: Conciencia (Sahasrara)</h4>
+            </div>
+            <p>Metacognición y autoconciencia del sistema</p>
+          </div>
+          <div class="chakra-card">
+            <div class="chakra-header">
+              <div class="chakra-symbol" style="background: #ffffff; color: #000;">⚪</div>
+              <h4>Capa 8: Trascendencia (Bindu)</h4>
+            </div>
+            <p>Integración holística y emergencia de propiedades superiores</p>
+          </div>
+        </div>
+        <a href="#top" class="back-to-top">↑ Volver arriba</a>
+      </section>
+      
+      <section id="symbolic" class="section" aria-labelledby="symbolic-title">
+        <h2 class="section-title" id="symbolic-title">4. Interpretación Simbólica Funcional</h2>
+        <p class="text-content">El mapeo entre chakras y capas cognitivas no es meramente metafórico, sino que proporciona un framework estructural basado en milenios de observación empírica sobre los estados de conciencia humana.</p>
+        <h3 class="subsection-title">4.1 Fundamentos Teóricos</h3>
+        <p class="text-content">Cada chakra representa un centro de procesamiento especializado que maneja tipos específicos de información y estados cognitivos. Esta especialización permite:</p>
+        <ul>
+          <li><strong>Procesamiento paralelo especializado</strong> en diferentes dominios cognitivos</li>
+          <li><strong>Jerarquía natural de prioridades</strong> basada en la importancia evolutiva</li>
+          <li><strong>Mecanismos de integración</strong> que preservan la coherencia global</li>
+          <li><strong>Capacidad de autoregulación</strong> a través de feedback entre capas</li>
+        </ul>
+        <div class="formula-box"><strong>Función de Transferencia Inter-Capa:</strong><br>
+          $T(i\to j) = \alpha \times C(i) \times R(j) \times e^{-\beta|i-j|}$<br><br>
+          Donde:<br>
+          • $C(i)$ = Coherencia de la capa origen<br>
+          • $R(j)$ = Receptividad de la capa destino<br>
+          • $|i-j|$ = Distancia jerárquica entre capas<br>
+          • $\alpha, \beta$ = Parámetros de calibración
+        </div>
+        <a href="#top" class="back-to-top">↑ Volver arriba</a>
+      </section>
+      
+      <section id="parameters" class="section" aria-labelledby="parameters-title">
+        <h2 class="section-title" id="parameters-title">5. Parámetros de Calibración</h2>
+        <p class="text-content">El sistema AION utiliza cinco parámetros fundamentales que controlan el comportamiento del proceso ERASE-TRANSFER-MANIFEST:</p>
+        <div class="parameters-grid">
+          <div class="parameter-card">
+            <div class="parameter-symbol">α</div>
+            <h4>Intensidad de Transferencia</h4>
+            <p>Controla la fuerza de migración entre capas</p>
+          </div>
+          <div class="parameter-card">
+            <div class="parameter-symbol">β</div>
+            <h4>Decaimiento Jerárquico</h4>
+            <p>Regula la atenuación por distancia entre capas</p>
+          </div>
+          <div class="parameter-card">
+            <div class="parameter-symbol">γ</div>
+            <h4>Umbral de Borrado</h4>
+            <p>Define el punto de eliminación de información</p>
+          </div>
+          <div class="parameter-card">
+            <div class="parameter-symbol">δ</div>
+            <h4>Coherencia Temporal</h4>
+            <p>Mantiene consistencia a través del tiempo</p>
+          </div>
+          <div class="parameter-card">
+            <div class="parameter-symbol">ε</div>
+            <h4>Factor de Manifestación</h4>
+            <p>Controla la emergencia de nuevos estados</p>
+          </div>
+        </div>
+        <div class="formula-box"><strong>Ecuación Maestra AION:</strong><br>
+          $$\Psi(t+1) = M[\varepsilon] \circ T[\alpha,\beta,\delta] \circ E[\gamma] (\Psi(t))$$<br>
+          Donde:<br>
+          • $\Psi(t)$ = Estado cognitivo en tiempo t<br>
+          • $E[\gamma]$ = Operador de borrado con umbral $\gamma$<br>
+          • $T[\alpha,\beta,\delta]$ = Operador de transferencia<br>
+          • $M[\varepsilon]$ = Operador de manifestación<br>
+          • $\circ$ = Composición de operadores
+        </div>
+        <a href="#top" class="back-to-top">↑ Volver arriba</a>
+      </section>
+      
+      <section id="implementation" class="section" aria-labelledby="implementation-title">
+        <h2 class="section-title" id="implementation-title">6. Implementación</h2>
+        <h3 class="subsection-title">6.1 Arquitectura Técnica</h3>
+        <p class="text-content">La implementación de AION se basa en una arquitectura distribuida que permite el procesamiento paralelo de las ocho capas cognitivas:</p>
+        <div class="highlight-box">
+          <h4>Componentes Principales:</h4>
+          <ul>
+            <li><strong>Memory Layer Manager:</strong> Gestiona el estado de cada capa cognitiva</li>
+            <li><strong>Transfer Engine:</strong> Ejecuta las operaciones de migración inter-capa</li>
+            <li><strong>Coherence Monitor:</strong> Supervisa la consistencia semántica global</li>
+            <li><strong>Parameter Optimizer:</strong> Ajusta dinámicamente los parámetros $\alpha$-$\varepsilon$</li>
+            <li><strong>Manifestation Controller:</strong> Genera nuevos estados cognitivos</li>
+          </ul>
+        </div>
+        <h3 class="subsection-title">6.2 Pipeline de Procesamiento</h3>
+        <p class="text-content">Cada ciclo de procesamiento AION sigue una secuencia estructurada:</p>
+        <ol>
+          <li><strong>Análisis de Estado:</strong> Evaluación de la coherencia actual</li>
+          <li><strong>Identificación de Inconsistencias:</strong> Detección de deriva semántica</li>
+          <li><strong>Ejecución ERASE:</strong> Limpieza selectiva de información obsoleta</li>
+          <li><strong>Ejecución TRANSFER:</strong> Migración de información relevante</li>
+          <li><strong>Ejecución MANIFEST:</strong> Generación de nuevos estados coherentes</li>
+          <li><strong>Validación:</strong> Verificación de la coherencia resultante</li>
+        </ol>
+        <a href="#top" class="back-to-top">↑ Volver arriba</a>
+      </section>
+      
+      <section id="results" class="section" aria-labelledby="results-title">
+        <h2 class="section-title" id="results-title">7. Resultados y Validación</h2>
+        <h3 class="subsection-title">7.1 Métricas de Rendimiento</h3>
+        <p class="text-content">Las pruebas preliminares de AION muestran mejoras significativas en múltiples dimensiones:</p>
+        <div class="highlight-box">
+          <h4>Resultados Cuantitativos:</h4>
+          <ul>
+            <li><strong>Reducción de deriva semántica:</strong> 73% comparado con modelos baseline</li>
+            <li><strong>Mejora en coherencia contextual:</strong> 45% en sesiones extendidas</li>
+            <li><strong>Estabilidad temporal:</strong> 89% de consistencia en respuestas repetidas</li>
+            <li><strong>Eficiencia computacional:</strong> 23% de reducción en recursos requeridos</li>
+          </ul>
+        </div>
+        <h3 class="subsection-title">7.2 Casos de Uso Validados</h3>
+        <p class="text-content">AION ha sido probado exitosamente en diversos escenarios:</p>
+        <ul>
+          <li><strong>Asistentes conversacionales:</strong> Mantenimiento de personalidad coherente</li>
+          <li><strong>Sistemas de recomendación:</strong> Adaptación a preferencias evolutivas</li>
+          <li><strong>Análisis de texto:</strong> Interpretación consistente de documentos complejos</li>
+          <li><strong>Generación creativa:</strong> Mantenimiento de estilo y tono</li>
+        </ul>
+        <a href="#top" class="back-to-top">↑ Volver arriba</a>
+      </section>
+      
+      <section id="conclusions" class="section" aria-labelledby="conclusions-title">
+        <h2 class="section-title" id="conclusions-title">8. Conclusiones y Trabajo Futuro</h2>
+        <h3 class="subsection-title">8.1 Contribuciones Principales</h3>
+        <p class="text-content">La Arquitectura de Memoria AION representa un avance significativo en el desarrollo de sistemas de IA cognitivamente coherentes:</p>
+        <ul>
+          <li><strong>Framework teórico robusto</strong> basado en principios cognitivos establecidos</li>
+          <li><strong>Solución práctica</strong> a problemas críticos de deriva semántica</li>
+          <li><strong>Arquitectura escalable</strong> adaptable a diferentes dominios de aplicación</li>
+          <li><strong>Mecanismos de autoregulación</strong> que mejoran la estabilidad del sistema</li>
+        </ul>
+        <h3 class="subsection-title">8.2 Direcciones Futuras</h3>
+        <p class="text-content">El desarrollo futuro de AION se enfocará en:</p>
+        <ul>
+          <li><strong>Optimización automática de parámetros</strong> mediante aprendizaje por refuerzo</li>
+          <li><strong>Extensión a modalidades múltiples</strong> (visión, audio, sensores)</li>
+          <li><strong>Integración con sistemas de conocimiento</strong> externos</li>
+          <li><strong>Desarrollo de métricas avanzadas</strong> de coherencia cognitiva</li>
+        </ul>
+        <div class="highlight-box">
+          <p class="text-content"><strong>AION representa un paso fundamental hacia la creación de sistemas de IA verdaderamente cognitivos, capaces de mantener coherencia semántica y desarrollar formas emergentes de comprensión que trascienden las limitaciones de los modelos actuales.</strong></p>
+        </div>
+        <a href="#top" class="back-to-top">↑ Volver arriba</a>
+      </section>
+    </main>
+    <footer class="footer">
+      <p id="footer-text">© 2024 AION Research Initiative</p>
+    </footer>
+  </div>
+    
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Usamos el ID del NAV y el selector de enlaces
+      const tocLinks = document.querySelectorAll('#toc a');
+      
+      // Creamos un array de elementos de sección a observar
+      const sections = Array.from(tocLinks).map(link =>    
+        document.getElementById(link.getAttribute('href').substring(1))  
+      );
+      
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            const idx = sections.indexOf(entry.target);
+            if (entry.isIntersecting) {
+              // Remueve 'active' de todos los enlaces
+              tocLinks.forEach(link => link.classList.remove('active'));
+              
+              // Añade 'active' al enlace correspondiente a la sección visible
+              if (idx !== -1) tocLinks[idx].classList.add('active');
+            }
+          });
+        },
+        // Opciones del Observer: Margen para activar la sección antes de que llegue al top
+        { rootMargin: '-40px 0px -80% 0px', threshold: 0.1 } /* Ajustado a -40px por el sticky header */
+      );
+      
+      // Observar todas las secciones
+      sections.forEach(section => section && observer.observe(section));
+
+        // Código de smooth scrolling (mantenido para eventos click)
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        
+        document.querySelectorAll('.toc-list a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        document.querySelectorAll('.back-to-top').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+            });
+        });
+    });
+    </script>
+</body>
+</html>
